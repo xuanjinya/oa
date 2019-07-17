@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启自动扫描-->
+    <context:component-scan base-package="com.imooc.oa.dao"/>
+
+    <!--配置beans(数据源,)-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!--包含连接数据库的四个基本属性-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/oa?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+    <!--配置session工厂（由spring和mybatis整合包里面提供的）-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--至少配置一个datasource(需要关联之前声明的数据源)-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置别名,(使用的时候不用使用全称)-->
+        <property name="typeAliasesPackage" value="com.imooc.oa.entity"/>
+    </bean>
+
+    <!--配置映射器接口（因为是直接调用，无需配置id）-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--至少配置两个属性（第一个：sqlSessionFactoryBeanName的value为session工厂的id
+                            第二个：basePackage的value的值代表，扫描这个包的所有的接口，并且将接口和映射文件关联起来，生成持久化操作对象)
+                            -->
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+        <property name="basePackage" value="com.imooc.oa.dao"/>
+    </bean>
+
+
+</beans>

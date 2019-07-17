@@ -1,0 +1,28 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--配置要使用到spring-biz.xml里的相关-->
+    <import resource="spring-biz.xml"/>
+    <!--开启自动扫描-->
+    <context:component-scan base-package="com.imooc.oa.controller"/>
+    <!--因为控制器中会包含很多相关的注解，所以需要进行mvc相关的配置-->
+    <mvc:annotation-driven/>
+    <!--静态资源配置-->
+    <mvc:default-servlet-handler/>
+    <!--配置视图转换器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <!--配置前缀和后缀-->
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+</beans>
