@@ -11,7 +11,7 @@ import java.io.IOException;
  * @Describe: 过滤器
  */
 public class EncodingFilter implements Filter {
-    private String encoding = "utf-8";
+    private String encoding = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
